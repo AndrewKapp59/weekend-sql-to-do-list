@@ -41,6 +41,20 @@ router.post('/', (req, res) => {
         })
 })
 
+// DELETE
+router.delete('/:id', (req, res) => {
+  let reqId = req.params.id;
+  let queryText = 'DELETE FROM "list" WHERE "id" = $1;';
+  pool.query(queryText, [reqId])
+    .then ((result) => {
+        console.log('Todo deleted');
+        res.sendStatus(200);
+    })
+    .catch((error) => {
+        console.log('Error making database query', queryText, error);
+        res.sendStatus(500)
+    });
+})
 
 // PUT
 // koalaRouter.put('/:id', (req, res) => {
@@ -76,6 +90,6 @@ router.post('/', (req, res) => {
 //     })
 //   })
 
-// DELETE
+
 
 module.exports = router;

@@ -9,6 +9,7 @@ $( document ).ready( function(){
 // CLICK LISTENERS
 function clickListeners() {
   $('#addButton').on('click', handleSubmit);
+  $('#listContainer').on('click', '.btn-delete', deleteTodo);
 }
 
 // INPUT -> OBJECT -> POST
@@ -72,4 +73,19 @@ function renderList(list) {
     `);
   }
 }  
+
+function deleteTodo () {
+  let todoId = $(this).data().id;
+  $.ajax({
+      type: 'DELETE',
+      url: `/list/${todoId}`,
+  })
+  .then(function(response) {
+      console.log('Deleted it');
+      getList()
+  })
+  .catch(function(error) {
+      console.log('Error Deleting', error);
+  })
+}
 
