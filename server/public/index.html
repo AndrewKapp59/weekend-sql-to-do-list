@@ -12,13 +12,28 @@
   <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-  <header>
-    <h1>To Do List</h1>
-  </header>
-<input id = "addTask">
-<button id = "addButton"><i class="fa-solid fa-circle-plus"></i></button>
 <body>
-  <div id = "listContainer">
+  <div id = 'container'>
+    <header>
+      <h1>To Do List</h1>
+    </header>
+
+    <div>
+      <input id = "addTask">
+      <button id = "addButton">
+        <i class="fa-solid fa-circle-plus"></i>
+      </button>
+      <!-- <div class="select">
+        <select name="todos" class="filter-todo">
+          <option value="all">All</option>
+          <option value="completed">Completed</option>
+          <option value="uncompleted">Uncompleted</option>
+        </select>
+      </div> -->
+    </div>  
+
+    <div id = "listContainer">
+    </div>
   </div>
 </body>
 </html>

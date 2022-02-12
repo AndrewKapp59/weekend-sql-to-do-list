@@ -62,8 +62,8 @@ function renderList(list) {
     // For each list, append a new row to our table
     $('#listContainer').append(`
       <ul>
-        <li>${todo.todo}, ${todo.complete}</li>
-        <button class = 'btn-complete' data-id = ${todo.id} data-complete = ${todo.complete}>Complete? T/F</button>
+        <li class = '${todo.complete}'>${todo.todo}</li>
+        <button class = 'btn-complete ${todo.complete}' data-id = ${todo.id} data-complete = ${todo.complete}>Complete? T/F</button>
         <button class = 'btn-delete' data-id = ${todo.id}>Delete</button>
         </td>
       </ul>
