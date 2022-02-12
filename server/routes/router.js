@@ -23,25 +23,23 @@ router.get('/',(req,res)=>{
 
 
 // POST
-
-// router.post('/', (req, res) => {
-//     let koala = req.body.koala
-//     console.log(koala);
+router.post('/', (req, res) => {
+    let newTodo = req.body
+    console.log(newTodo);
     
-
-//     let sqlText = `
-//     INSERT INTO "koala" ("name", "age", "gender", "ready", "notes") 
-//     VALUES ( $1, $2, $3, $4, $5);`
+    let sqlText = `
+    INSERT INTO "list" ("todo", "complete") 
+    VALUES ($1, $2);`
     
-//     let koalaStuff = [koala.name, koala.age, koala.gender, koala.readyForTransfer, koala.notes]
-//     pool.query(sqlText, koalaStuff)
-//         .then(results => {
-//             res.sendStatus(201)
-//         }).catch(err => {
-//             console.log('this Koala is hecked', err);
-//             res.sendStatus(500)
-//         })
-// })
+    let todo = [newTodo.todo, false]
+    pool.query(sqlText, todo)
+        .then(results => {
+            res.sendStatus(201)
+        }).catch(err => {
+            console.log('todo not added', err);
+            res.sendStatus(500)
+        })
+})
 
 
 // PUT

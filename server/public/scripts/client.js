@@ -9,7 +9,7 @@ $( document ).ready( function(){
 
 // CLICK LISTENERS
 function clickListeners() {
-  $('#addButton').on('click', );
+  $('#addButton').on('click', handleSubmit);
 }
 
 // INPUT -> OBJECT -> POST
@@ -25,11 +25,11 @@ function handleSubmit() {
 function addTodo(newTodo) {
   $.ajax({
     type: 'POST',
-    url: '/books',
+    url: '/list',
     data: newTodo,
     }).then(function(response) {
       console.log('Response from server.', response);
-      refreshBooks();
+      getList();
     }).catch(function(error) {
       console.log('Error in POST', error)
       alert('Unable to add new todo');
@@ -54,7 +54,7 @@ function getList(){
 
 // RENDER
 function renderList(list) {
-  $('#todoList').empty();
+  $('#listContainer').empty();
   for(let i = 0; i < list.length; i += 1) {
     let todo = list[i];
     // For each list, append a new row to our table
