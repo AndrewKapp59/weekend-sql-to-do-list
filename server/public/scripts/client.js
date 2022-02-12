@@ -1,7 +1,4 @@
-console.log( 'js' );
-
 $( document ).ready( function(){
-  console.log( 'JQ' );
   clickListeners()
   getList();
 });
@@ -10,6 +7,7 @@ $( document ).ready( function(){
 function clickListeners() {
   $('#addButton').on('click', handleSubmit);
   $('#listContainer').on('click', '.btn-delete', deleteTodo);
+  $('#listContainer').on('click', '.btn-complete', todoComplete);
 }
 
 // INPUT -> OBJECT -> POST
@@ -43,12 +41,11 @@ function addTodo(newTodo) {
 
 // GET
 function getList(){
-  console.log( 'in getList' );
   $.ajax({
     type: 'GET',
     url: '/list'
   }).then(function(response) {
-    console.log(response);
+    console.log('Current todo list', response);
     renderList(response);
   }).catch(function(error){
     console.log('error in GET', error);
@@ -64,9 +61,9 @@ function renderList(list) {
     let todo = list[i];
     // For each list, append a new row to our table
     $('#listContainer').append(`
-      <ul data-complete = ${todo.complete} data-id = ${todo.id}>
+      <ul>
         <li>${todo.todo}, ${todo.complete}</li>
-        <button class = 'btn-complete'data-id = ${todo.complete}>Complete? T/F</button>
+        <button class = 'btn-complete' data-id = ${todo.id} data-complete = ${todo.complete}>Complete? T/F</button>
         <button class = 'btn-delete' data-id = ${todo.id}>Delete</button>
         </td>
       </ul>
@@ -74,6 +71,7 @@ function renderList(list) {
   }
 }  
 
+// DELETE
 function deleteTodo () {
   let todoId = $(this).data().id;
   $.ajax({
@@ -89,3 +87,36 @@ function deleteTodo () {
   })
 }
 
+// PUT i.e. UPDATE
+function todoComplete () {
+  let id = $(this).data().id;
+  let complete = $(this).data().complete;
+
+  if (complete === false) {
+    console.log('Task completed');
+    $.ajax({
+        method: 'PUT',
+        url: `/list/${id}`,
+        data: {complete: !complete}
+    })
+    .then(function(response) {
+        getList();
+    })
+    .catch(function(err) {
+        alert('Error updating');
+    })
+  }
+  else {
+    $.ajax({
+        method: 'PUT',
+        url: `/list/${id}`,
+        data: {complete: !complete}
+    })
+    .then(function(response) {
+        getList();
+    })
+    .catch(function(err) {
+        alert('Error updating');
+    })
+  }
+}  

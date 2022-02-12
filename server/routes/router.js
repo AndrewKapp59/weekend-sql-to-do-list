@@ -1,12 +1,11 @@
+// DB CONNECTION
 const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool')
-// DB CONNECTION
-
 
 // GET
 router.get('/',(req,res)=>{
-    let queryText = 'SELECT * FROM "list";';
+    let queryText = 'SELECT * FROM "list" ORDER BY "id";';
     console.log(req.body);
     
     pool.query(queryText)
@@ -21,15 +20,13 @@ router.get('/',(req,res)=>{
     })
 })
 
-
 // POST
 router.post('/', (req, res) => {
     let newTodo = req.body
     console.log(newTodo);
     
     let sqlText = `
-    INSERT INTO "list" ("todo", "complete") 
-    VALUES ($1, $2);`
+    INSERT INTO "list" ("todo", "complete") VALUES ($1, $2);`
     
     let todo = [newTodo.todo, false]
     pool.query(sqlText, todo)
@@ -57,39 +54,18 @@ router.delete('/:id', (req, res) => {
 })
 
 // PUT
-// koalaRouter.put('/:id', (req, res) => {
-//     let idToUpdate = req.params.id;
-//     console.log(idToUpdate);
-//     console.log(req.body.boolean);
-   
-  
-//     let sqlText = '';
-  
-//     if (req.body.boolean === 'false') {
-//      sqlText = `
-//      UPDATE "koala" 
-//      SET "ready" = 'true'
-//      WHERE "id" = $1;
-//     ` 
-//     } 
-//     else {
-//         //bad req...
-//         res.sendStatus(418)
-//         // NOTHING ELSE HAPPENS
-//         return;
-//     }
-  
-//     let sqlValues = [idToUpdate];
-//     pool.query(sqlText, sqlValues)
-//     .then(result => {
-//      res.sendStatus(200)
-//     })
-//     .catch(error => {
-//      console.log(err);
-//      console.log(500);
-//     })
-//   })
+router.put( '/:id', ( req, res )=>{
+  console.log(req.params.id);
+  console.log(req.body);
 
-
+  let query = `UPDATE "list" SET complete=$1 WHERE id=$2;`;
+  const values =[ req.body.complete, req.params.id ];
+  pool.query( query, values ).then( (results)=>{
+      res.sendStatus( 200 );
+  }).catch( ( err )=>{
+      console.log( 'error with update:', err );
+      res.sendStatus( 500 );
+  })
+})
 
 module.exports = router;
