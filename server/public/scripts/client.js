@@ -4,7 +4,6 @@ $( document ).ready( function(){
   console.log( 'JQ' );
   clickListeners()
   getList();
-
 });
 
 // CLICK LISTENERS
@@ -16,9 +15,14 @@ function clickListeners() {
 function handleSubmit() {
   console.log('Add button clicked');
   let newTodo = {};
-  newTodo.todo = $('#addTask').val();
-  $('#addTask').val('');
-  addTodo(newTodo);
+  newTodo.todo = $('#addTask').val().trim();
+  $('#addTask').val(''); 
+  if (newTodo.todo === '' ) {
+    alert('Input blank. Please add a task')
+  }
+  else {
+    addTodo(newTodo);
+  }
 }
 
 // POST
@@ -61,10 +65,11 @@ function renderList(list) {
     $('#listContainer').append(`
       <ul data-complete = ${todo.complete} data-id = ${todo.id}>
         <li>${todo.todo}, ${todo.complete}</li>
-        <button class = 'btn-complete'>Complete? T/F</button>
+        <button class = 'btn-complete'data-id = ${todo.complete}>Complete? T/F</button>
         <button class = 'btn-delete' data-id = ${todo.id}>Delete</button>
         </td>
       </ul>
     `);
   }
 }  
+
