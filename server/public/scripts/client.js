@@ -2,31 +2,41 @@ console.log( 'js' );
 
 $( document ).ready( function(){
   console.log( 'JQ' );
-  // clickListeners()
+  clickListeners()
   getList();
 
 });
 
-// function clickListeners() {
-//   $( '#addButton' ).on( 'click', function(){
-//     console.log( 'in addButton on click' );
-//     // get user input and put in an object
-//     // NOT WORKING YET :(
-//     // using a test object
-//     let koalaToSend = {
-//       name: $('#nameIn').val(),
-//       age: $('#ageIn').val(),
-//       gender: $('#genderIn').val(),
-//       readyForTransfer: $('#readyForTransferIn').val(),
-//       notes: $('#notesIn').val(),
-//     };
-//     // call saveKoala with the new obejct
-//     saveKoala( koalaToSend );
+// CLICK LISTENERS
+function clickListeners() {
+  $('#addButton').on('click', );
+}
 
-    
-//   }); 
-// }
+// INPUT -> OBJECT -> POST
+function handleSubmit() {
+  console.log('Add button clicked');
+  let newTodo = {};
+  newTodo.todo = $('#addTask').val();
+  $('#addTask').val('');
+  addTodo(newTodo);
+}
 
+// POST
+function addTodo(newTodo) {
+  $.ajax({
+    type: 'POST',
+    url: '/books',
+    data: newTodo,
+    }).then(function(response) {
+      console.log('Response from server.', response);
+      refreshBooks();
+    }).catch(function(error) {
+      console.log('Error in POST', error)
+      alert('Unable to add new todo');
+    });
+}
+
+// GET
 function getList(){
   console.log( 'in getList' );
   $.ajax({
@@ -41,6 +51,8 @@ function getList(){
   // $('#viewKoalas').on('click', '.mark-ready-btn', transferKoala)
 }
 
+
+// RENDER
 function renderList(list) {
   $('#todoList').empty();
   for(let i = 0; i < list.length; i += 1) {
