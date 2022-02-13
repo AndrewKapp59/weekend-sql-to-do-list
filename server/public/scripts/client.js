@@ -8,6 +8,21 @@ function clickListeners() {
   $('#addButton').on('click', handleSubmit);
   $('#listContainer').on('click', '.btn-delete', deleteTodo);
   $('#listContainer').on('click', '.btn-complete', todoComplete);
+  $('#filter').change(filterTasks);
+}
+
+function filterTasks () {
+  console.log($('#filter').val());
+  let filter = $('#filter').val()
+  if (filter === 'all') {
+    getList()
+  }
+  else if (filter === 'completed') {
+    getComplete()
+  }
+  else {
+    getUncomplete()
+  }
 }
 
 // INPUT -> OBJECT -> POST
@@ -39,7 +54,7 @@ function addTodo(newTodo) {
     });
 }
 
-// GET
+// GET ALL
 function getList(){
   $.ajax({
     type: 'GET',
@@ -50,7 +65,32 @@ function getList(){
   }).catch(function(error){
     console.log('error in GET', error);
   });
-  // $('#viewKoalas').on('click', '.mark-ready-btn', transferKoala)
+}
+
+// GET COMPLETED
+function getComplete(){
+  $.ajax({
+    type: 'GET',
+    url: '/list/complete'
+  }).then(function(response) {
+    console.log('Current todo list', response);
+    renderList(response);
+  }).catch(function(error){
+    console.log('error in GET/complete', error);
+  });
+}
+
+// GET UNCOMPLETED
+function getUncomplete(){
+  $.ajax({
+    type: 'GET',
+    url: '/list/uncomplete'
+  }).then(function(response) {
+    console.log('Current todo list', response);
+    renderList(response);
+  }).catch(function(error){
+    console.log('error in GET/uncomplete', error);
+  });
 }
 
 
@@ -62,13 +102,9 @@ function renderList(list) {
     // For each list, append a new row to our table
     $('#listContainer').append(`
       <ul>
-        <li class = '${todo.complete}'>${todo.todo}</li>
-        <button class = 'btn-complete ${todo.complete}' 
-        data-id = ${todo.id} 
-        data-complete = ${todo.complete}>
-        <i class="fas fa-check"></i></button>
         <button class = 'btn-delete' data-id = ${todo.id}><i class="fas fa-trash"></i></button>
-        </td>
+        <button class = 'btn-complete ${todo.complete}' data-id = ${todo.id} data-complete = ${todo.complete}><i class="fas fa-check"></i></button>
+        <li class = '${todo.complete}'>${todo.todo}</li>
       </ul>
     `);
   }
@@ -123,3 +159,4 @@ function todoComplete () {
     })
   }
 }  
+

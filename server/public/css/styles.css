@@ -1,5 +1,6 @@
 body {
-  background-image: url("https://t3.ftcdn.net/jpg/00/74/04/66/360_F_74046684_nfxl9VtPQwuTAqahg59AclumPaSVCtQp.jpg");
+  background-image: url(wepik-2022112-212944.jpg);
+  background-position: center;
   font-family: "Patrick Hand";
   min-height: 100vh;
   /* text-align: center; */
@@ -15,6 +16,7 @@ header {
 
 #container {
   min-height: calc((1vw + 1vh) * 30);
+  max-width: 800px;
   /* box-shadow: 2px 3px 20px black, 0 0 60px #8a4d0f inset;
   background: #fffef0; */
   border-radius: 15px;
@@ -25,7 +27,7 @@ header {
 input {
   padding: 0.5rem;
   font-size: 25px;
-  width: 500px;
+  width: 750px;
   border: none;
   border-radius: 15px;
   background: rgb(202, 230, 247);
@@ -39,11 +41,49 @@ input {
   border: none;
   border-radius: 100px;
   background: none;
+  margin-left: 10px;
+  
 }
+
 #add {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+select {
+  outline: 0;
+  box-shadow: none;
+  border: none;
+  background-image: none;
+  text-align: left;
+  border-radius: 15px;
+  background: rgb(202, 230, 247)
+}
+
+.select {
+  margin: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+select {
+  color: black;
+  font-family: "Patrick Hand";
+  font-size: 25px;
+  cursor: pointer;
+  width: 300px;
+}
+
+.select::after {
+  content: "\25BC";
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+  background: rgb(143, 182, 236);
+  cursor: pointer;
+  pointer-events: none;
 }
 
 .btn-delete,
@@ -79,6 +119,7 @@ button.true {
 li.true {
   text-decoration: line-through;
   opacity: 0.5;
+  /* background: rgb(202, 230, 247); */
 }
 
 li {
@@ -93,7 +134,7 @@ li {
 }
 
 ul {
-  justify-content: center;
+  justify-content: left;
   display: flex;
   color: rgb(42,134,165);
 }
