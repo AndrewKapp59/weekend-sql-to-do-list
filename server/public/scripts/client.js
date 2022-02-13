@@ -9,7 +9,7 @@ function clickListeners() {
   $('#listContainer').on('click', '.btn-delete', deleteAnimation)
   $('#listContainer').on( 'transitionend', '.fall', deleteTodo);
   $('#listContainer').on('click', '.btn-complete', todoComplete);
-  // $('#filter').change(filterTasks);
+  $('#filter').change(filterTasks);
   $('#addTask').keydown(function(event){
     if (event.keyCode === 13) {
       $('#addButton').click();
