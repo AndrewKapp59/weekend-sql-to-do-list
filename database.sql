@@ -7,4 +7,4 @@ CREATE TABLE "list" (
 
 INSERT INTO "list" ("todo", "complete") 
 VALUES ( 'Walk the dog', TRUE),
- ('Do the luandry', FALSE), ('Clean the dishes', FALSE); 
+ ('Do luandry', FALSE), ('Go grocery shopping', TRUE), ('Clean the dishes', FALSE); 

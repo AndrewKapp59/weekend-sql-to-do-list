@@ -6,9 +6,19 @@ $( document ).ready( function(){
 // CLICK LISTENERS
 function clickListeners() {
   $('#addButton').on('click', handleSubmit);
-  $('#listContainer').on('click', '.btn-delete', deleteTodo);
+  $('#listContainer').on('click', '.btn-delete', deleteAnimation)
+  $('#listContainer').on( 'transitionend', '.fall', deleteTodo);
   $('#listContainer').on('click', '.btn-complete', todoComplete);
-  $('#filter').change(filterTasks);
+  // $('#filter').change(filterTasks);
+  $('#addTask').keydown(function(event){
+    if (event.keyCode === 13) {
+      $('#addButton').click();
+    }
+  })
+}
+
+function deleteAnimation() {
+  $(this).parent().addClass('fall');
 }
 
 function filterTasks () {
@@ -101,10 +111,10 @@ function renderList(list) {
     let todo = list[i];
     // For each list, append a new row to our table
     $('#listContainer').append(`
-      <ul>
+      <ul data-id = ${todo.id} class = "">
         <button class = 'btn-delete' data-id = ${todo.id}><i class="fas fa-trash"></i></button>
         <button class = 'btn-complete ${todo.complete}' data-id = ${todo.id} data-complete = ${todo.complete}><i class="fas fa-check"></i></button>
-        <li class = '${todo.complete}'>${todo.todo}</li>
+        <li class = todo '${todo.complete}' >${todo.todo}</li>
       </ul>
     `);
   }
@@ -119,7 +129,8 @@ function deleteTodo () {
   })
   .then(function(response) {
       console.log('Deleted it');
-      getList()
+
+      filterTasks()
   })
   .catch(function(error) {
       console.log('Error Deleting', error);
@@ -139,7 +150,7 @@ function todoComplete () {
         data: {complete: !complete}
     })
     .then(function(response) {
-        getList();
+        filterTasks();
     })
     .catch(function(err) {
         alert('Error updating');

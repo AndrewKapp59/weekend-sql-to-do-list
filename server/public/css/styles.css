@@ -25,6 +25,7 @@ header {
 }
 
 input {
+  font-family: "Patrick Hand";
   padding: 0.5rem;
   font-size: 25px;
   width: 750px;
@@ -127,4 +128,10 @@ ul {
   justify-content: left;
   display: flex;
   color: rgb(42,134,165);
+}
+
+.fall {
+  transform: translateY(10rem) rotateZ(20deg);
+  opacity: 0;
+  transition: all .5s ease;
 }
