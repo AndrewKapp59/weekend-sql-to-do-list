@@ -63,8 +63,11 @@ function renderList(list) {
     $('#listContainer').append(`
       <ul>
         <li class = '${todo.complete}'>${todo.todo}</li>
-        <button class = 'btn-complete ${todo.complete}' data-id = ${todo.id} data-complete = ${todo.complete}>Complete? T/F</button>
-        <button class = 'btn-delete' data-id = ${todo.id}>Delete</button>
+        <button class = 'btn-complete ${todo.complete}' 
+        data-id = ${todo.id} 
+        data-complete = ${todo.complete}>
+        <i class="fas fa-check"></i></button>
+        <button class = 'btn-delete' data-id = ${todo.id}><i class="fas fa-trash"></i></button>
         </td>
       </ul>
     `);

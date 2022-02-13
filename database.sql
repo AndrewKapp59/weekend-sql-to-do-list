@@ -1,7 +1,7 @@
 
 CREATE TABLE "list" (
   "id" serial PRIMARY KEY,
-  "todo" varchar(20) NOT NULL,
+  "todo" varchar(100) NOT NULL,
   "complete" BOOLEAN DEFAULT false
 );
 
