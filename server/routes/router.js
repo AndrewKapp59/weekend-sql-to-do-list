@@ -3,10 +3,44 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool')
 
-// GET
+// GET ALL
 router.get('/',(req,res)=>{
     let queryText = 'SELECT * FROM "list" ORDER BY "id";';
     console.log(req.body);
+    
+    pool.query(queryText)
+
+    .then((result)=>{
+        res.send(result.rows);
+
+    }).catch((err)=>{
+        console.log('Error making query', queryText, err);
+        res.sendStatus(418);
+        
+    })
+})
+
+// GET COMPLETED
+router.get('/complete',(req,res)=>{
+    let queryText = 'SELECT * FROM "list" WHERE "complete" = true ORDER BY "id";';
+    console.log('completed');
+    
+    pool.query(queryText)
+
+    .then((result)=>{
+        res.send(result.rows);
+
+    }).catch((err)=>{
+        console.log('Error making query', queryText, err);
+        res.sendStatus(418);
+        
+    })
+})
+
+// GET UNCOMPLETE
+router.get('/uncomplete',(req,res)=>{
+    let queryText = 'SELECT * FROM "list" WHERE "complete" = false ORDER BY "id";';
+    console.log('uncomplete');
     
     pool.query(queryText)
 
