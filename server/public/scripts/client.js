@@ -6,7 +6,8 @@ $( document ).ready( function(){
 // CLICK LISTENERS
 function clickListeners() {
   $('#addButton').on('click', handleSubmit);
-  $('#listContainer').on('click', '.btn-delete', deleteAnimation)
+  $('#listContainer').on('click', '.btn-delete', deleteAlert)
+  // $('#listContainer').on('click', '.btn-delete', deleteAnimation)
   $('#listContainer').on( 'transitionend', '.fall', deleteTodo);
   $('#listContainer').on('click', '.btn-complete', todoComplete);
   $('#filter').change(filterTasks);
@@ -17,10 +18,31 @@ function clickListeners() {
   })
 }
 
-function deleteAnimation() {
-  $(this).parent().addClass('fall');
+// SWEET ALERT
+function deleteAlert () {
+  swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this todo!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((result) => {
+    if (result) {
+      $(this).parent().addClass('fall')
+    } 
+    else {
+      swal("Your todo is safe!");
+    }
+  });
 }
 
+// DELETE ANIMATION
+// function deleteAnimation() {
+//   $(this).parent().addClass('fall');
+// }
+
+// SELECTOR FILTER
 function filterTasks () {
   console.log($('#filter').val());
   let filter = $('#filter').val()
@@ -114,7 +136,7 @@ function renderList(list) {
       <ul data-id = ${todo.id} class = "">
         <button class = 'btn-delete' data-id = ${todo.id}><i class="fas fa-trash"></i></button>
         <button class = 'btn-complete ${todo.complete}' data-id = ${todo.id} data-complete = ${todo.complete}><i class="fas fa-check"></i></button>
-        <li class = todo '${todo.complete}' >${todo.todo}</li>
+        <li class = '${todo.complete}' >${todo.todo}</li>
       </ul>
     `);
   }
@@ -129,7 +151,6 @@ function deleteTodo () {
   })
   .then(function(response) {
       console.log('Deleted it');
-
       filterTasks()
   })
   .catch(function(error) {
