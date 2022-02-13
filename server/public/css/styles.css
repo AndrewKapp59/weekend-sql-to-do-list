@@ -72,18 +72,8 @@ select {
   font-family: "Patrick Hand";
   font-size: 25px;
   cursor: pointer;
-  width: 300px;
-}
-
-.select::after {
-  content: "\25BC";
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 1rem;
-  background: rgb(143, 182, 236);
-  cursor: pointer;
-  pointer-events: none;
+  width:fit-content;
+  text-align: center;
 }
 
 .btn-delete,
