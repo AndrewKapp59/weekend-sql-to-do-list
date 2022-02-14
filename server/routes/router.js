@@ -92,8 +92,8 @@ router.put( '/:id', ( req, res )=>{
   console.log(req.params.id);
   console.log(req.body);
 
-  let query = `UPDATE "list" SET complete=$1 WHERE id=$2;`;
-  const values =[ req.body.complete, req.params.id ];
+  let query = `UPDATE "list" SET complete=$1, date=$2 WHERE id=$3;`;
+  const values =[ req.body.complete, req.body.date, req.params.id,];
   pool.query( query, values ).then( (results)=>{
       res.sendStatus( 200 );
   }).catch( ( err )=>{

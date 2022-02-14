@@ -1,6 +1,7 @@
 $( document ).ready( function(){
   clickListeners()
   getList();
+  // console.log(date);
 });
 
 // CLICK LISTENERS
@@ -136,7 +137,7 @@ function renderList(list) {
       <ul data-id = ${todo.id} class = "">
         <button class = 'btn-delete' data-id = ${todo.id}><i class="fas fa-trash"></i></button>
         <button class = 'btn-complete ${todo.complete}' data-id = ${todo.id} data-complete = ${todo.complete}><i class="fas fa-check"></i></button>
-        <li class = '${todo.complete}' >${todo.todo}</li>
+        <li class = '${todo.complete}' >${todo.todo} ${todo.date}</li>
       </ul>
     `);
   }
@@ -158,17 +159,21 @@ function deleteTodo () {
   })
 }
 
+let d = new Date();
+let date =  (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+
 // PUT i.e. UPDATE
 function todoComplete () {
   let id = $(this).data().id;
   let complete = $(this).data().complete;
+  console.log(complete);
 
   if (complete === false) {
     console.log('Task completed');
     $.ajax({
         method: 'PUT',
         url: `/list/${id}`,
-        data: {complete: !complete}
+        data: {complete: !complete, date:date}
     })
     .then(function(response) {
         filterTasks();
@@ -181,7 +186,7 @@ function todoComplete () {
     $.ajax({
         method: 'PUT',
         url: `/list/${id}`,
-        data: {complete: !complete}
+        data: {complete: !complete, date:null}
     })
     .then(function(response) {
         getList();

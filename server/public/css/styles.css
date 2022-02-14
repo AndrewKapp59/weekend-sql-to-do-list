@@ -1,6 +1,25 @@
-body {
+html {
   background-image: url(wepik-2022112-212944.jpg);
   background-position: center;
+  background-size: cover;
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+}
+
+body {
+  /* background-image: url(wepik-2022112-212944.jpg);
+  background-position: center;
+  background-size: cover; */
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
   font-family: "Patrick Hand";
   min-height: 100vh;
   /* text-align: center; */
@@ -21,14 +40,14 @@ header {
   background: #fffef0; */
   border-radius: 15px;
   margin: 3% 20%;
-  padding: 10px 75px 10px 75px;
+  padding: 10px 135px 10px 25px;
 }
 
 input {
   font-family: "Patrick Hand";
   padding: 0.5rem;
   font-size: 25px;
-  width: 750px;
+  width: 700px;
   border: none;
   border-radius: 15px;
   background: rgb(202, 230, 247);
