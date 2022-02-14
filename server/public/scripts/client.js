@@ -1,5 +1,5 @@
-$( document ).ready( function(){
-  clickListeners()
+$(document).ready(function () {
+  clickListeners();
   getList();
   // console.log(date);
 });
@@ -7,33 +7,31 @@ $( document ).ready( function(){
 // CLICK LISTENERS
 function clickListeners() {
   $('#addButton').on('click', handleSubmit);
-  $('#listContainer').on('click', '.btn-delete', deleteAlert)
+  $('#listContainer').on('click', '.btn-delete', deleteAlert);
   // $('#listContainer').on('click', '.btn-delete', deleteAnimation)
-  $('#listContainer').on( 'transitionend', '.fall', deleteTodo);
+  $('#listContainer').on('transitionend', '.fall', deleteTodo);
   $('#listContainer').on('click', '.btn-complete', todoComplete);
   $('#filter').change(filterTasks);
-  $('#addTask').keydown(function(event){
+  $('#addTask').keydown(function (event) {
     if (event.keyCode === 13) {
       $('#addButton').click();
     }
-  })
+  });
 }
 
 // SWEET ALERT
-function deleteAlert () {
+function deleteAlert() {
   swal({
-    title: "Are you sure?",
-    text: "Once deleted, you will not be able to recover this todo!",
-    icon: "warning",
+    title: 'Are you sure?',
+    text: 'Once deleted, you will not be able to recover this todo!',
+    icon: 'warning',
     buttons: true,
     dangerMode: true,
-  })
-  .then((result) => {
+  }).then((result) => {
     if (result) {
-      $(this).parent().addClass('fall')
-    } 
-    else {
-      swal("Your todo is safe!");
+      $(this).parent().addClass('fall');
+    } else {
+      swal('Your todo is safe!');
     }
   });
 }
@@ -44,17 +42,14 @@ function deleteAlert () {
 // }
 
 // SELECTOR FILTER
-function filterTasks () {
-  console.log($('#filter').val());
-  let filter = $('#filter').val()
+function filterTasks() {
+  let filter = $('#filter').val();
   if (filter === 'all') {
-    getList()
-  }
-  else if (filter === 'completed') {
-    getComplete()
-  }
-  else {
-    getUncomplete()
+    getList();
+  } else if (filter === 'completed') {
+    getComplete();
+  } else {
+    getUncomplete();
   }
 }
 
@@ -63,11 +58,10 @@ function handleSubmit() {
   console.log('Add button clicked');
   let newTodo = {};
   newTodo.todo = $('#addTask').val().trim();
-  $('#addTask').val(''); 
-  if (newTodo.todo === '' ) {
-    alert('Input blank. Please add a task')
-  }
-  else {
+  $('#addTask').val('');
+  if (newTodo.todo === '') {
+    alert('Input blank. Please add a task');
+  } else {
     addTodo(newTodo);
   }
 }
@@ -78,59 +72,66 @@ function addTodo(newTodo) {
     type: 'POST',
     url: '/list',
     data: newTodo,
-    }).then(function(response) {
+  })
+    .then(function (response) {
       console.log('Response from server.', response);
       getList();
-    }).catch(function(error) {
-      console.log('Error in POST', error)
+    })
+    .catch(function (error) {
+      console.log('Error in POST', error);
       alert('Unable to add new todo');
     });
 }
 
 // GET ALL
-function getList(){
+function getList() {
   $.ajax({
     type: 'GET',
-    url: '/list'
-  }).then(function(response) {
-    console.log('Current todo list', response);
-    renderList(response);
-  }).catch(function(error){
-    console.log('error in GET', error);
-  });
+    url: '/list',
+  })
+    .then(function (response) {
+      console.log('Current todo list', response);
+      renderList(response);
+    })
+    .catch(function (error) {
+      console.log('error in GET', error);
+    });
 }
 
 // GET COMPLETED
-function getComplete(){
+function getComplete() {
   $.ajax({
     type: 'GET',
-    url: '/list/complete'
-  }).then(function(response) {
-    console.log('Current todo list', response);
-    renderList(response);
-  }).catch(function(error){
-    console.log('error in GET/complete', error);
-  });
+    url: '/list/complete',
+  })
+    .then(function (response) {
+      console.log('Current todo list', response);
+      renderList(response);
+    })
+    .catch(function (error) {
+      console.log('error in GET/complete', error);
+    });
 }
 
 // GET UNCOMPLETED
-function getUncomplete(){
+function getUncomplete() {
   $.ajax({
     type: 'GET',
-    url: '/list/uncomplete'
-  }).then(function(response) {
-    console.log('Current todo list', response);
-    renderList(response);
-  }).catch(function(error){
-    console.log('error in GET/uncomplete', error);
-  });
+    url: '/list/uncomplete',
+  })
+    .then(function (response) {
+      console.log('Current todo list', response);
+      renderList(response);
+    })
+    .catch(function (error) {
+      console.log('error in GET/uncomplete', error);
+    });
 }
-
 
 // RENDER
 function renderList(list) {
   $('#listContainer').empty();
-  for(let i = 0; i < list.length; i += 1) {
+  for (let i = 0; i < list.length; i += 1) {
     let todo = list[i];
     // For each list, append a new row to our table
     $('#listContainer').append(`
@@ -141,59 +142,56 @@ function renderList(list) {
       </ul>
     `);
   }
-}  
+}
 
 // DELETE
-function deleteTodo () {
+function deleteTodo() {
   let todoId = $(this).data().id;
   $.ajax({
-      type: 'DELETE',
-      url: `/list/${todoId}`,
+    type: 'DELETE',
+    url: `/list/${todoId}`,
   })
-  .then(function(response) {
+    .then(function (response) {
       console.log('Deleted it');
-      filterTasks()
-  })
-  .catch(function(error) {
+      filterTasks();
+    })
+    .catch(function (error) {
       console.log('Error Deleting', error);
-  })
+    });
 }
 
 let d = new Date();
-let date =  (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+let date = d.getMonth() + 1 + '/' + d.getDate() + '/' + d.getFullYear();
 
 // PUT i.e. UPDATE
-function todoComplete () {
+function todoComplete() {
   let id = $(this).data().id;
   let complete = $(this).data().complete;
-  console.log(complete);
 
   if (complete === false) {
-    console.log('Task completed');
+    console.log('Task completed', date);
     $.ajax({
-        method: 'PUT',
-        url: `/list/${id}`,
-        data: {complete: !complete, date:date}
+      method: 'PUT',
+      url: `/list/${id}`,
+      data: { complete: !complete, date: date },
     })
-    .then(function(response) {
+      .then(function (response) {
         filterTasks();
-    })
-    .catch(function(err) {
+      })
+      .catch(function (err) {
         alert('Error updating');
-    })
-  }
-  else {
+      });
+  } else {
     $.ajax({
-        method: 'PUT',
-        url: `/list/${id}`,
-        data: {complete: !complete, date:null}
+      method: 'PUT',
+      url: `/list/${id}`,
+      data: { complete: !complete, date: null },
     })
-    .then(function(response) {
+      .then(function (response) {
         getList();
-    })
-    .catch(function(err) {
+      })
+      .catch(function (err) {
         alert('Error updating');
-    })
+      });
   }
-}  
-
+}
