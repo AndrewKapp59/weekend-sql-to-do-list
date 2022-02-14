@@ -49,7 +49,7 @@ input {
   font-size: 25px;
   width: 700px;
   border: none;
-  border-radius: 15px;
+  border-radius: 25px;
   background: rgb(202, 230, 247);
 }
 
@@ -147,6 +147,7 @@ ul {
   justify-content: left;
   display: flex;
   color: rgb(42,134,165);
+  padding: 0px 0px 0px 35px;
 }
 
 .fall {
