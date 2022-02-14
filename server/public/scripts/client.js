@@ -133,14 +133,24 @@ function renderList(list) {
   $('#listContainer').empty();
   for (let i = 0; i < list.length; i += 1) {
     let todo = list[i];
-    // For each list, append a new row to our table
-    $('#listContainer').append(`
+    if (todo.date === null) {
+      $('#listContainer').append(`
+      <ul data-id = ${todo.id} class = "">
+        <button class = 'btn-delete' data-id = ${todo.id}><i class="fas fa-trash"></i></button>
+        <button class = 'btn-complete ${todo.complete}' data-id = ${todo.id} data-complete = ${todo.complete}><i class="fas fa-check"></i></button>
+        <li class = '${todo.complete}' >${todo.todo}</li>
+      </ul>
+    `);
+    }
+    else {
+      $('#listContainer').append(`
       <ul data-id = ${todo.id} class = "">
         <button class = 'btn-delete' data-id = ${todo.id}><i class="fas fa-trash"></i></button>
         <button class = 'btn-complete ${todo.complete}' data-id = ${todo.id} data-complete = ${todo.complete}><i class="fas fa-check"></i></button>
         <li class = '${todo.complete}' >${todo.todo} ${todo.date}</li>
       </ul>
     `);
+    }
   }
 }
 
