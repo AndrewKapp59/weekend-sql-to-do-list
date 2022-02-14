@@ -48,8 +48,12 @@ function filterTasks() {
     getList();
   } else if (filter === 'completed') {
     getComplete();
-  } else {
+  } else if (filter === 'uncompleted'){
     getUncomplete();
+  }
+  else {
+    console.log('Nothing');
+    
   }
 }
 
@@ -198,7 +202,7 @@ function todoComplete() {
       data: { complete: !complete, date: null },
     })
       .then(function (response) {
-        getList();
+        filterTasks();
       })
       .catch(function (err) {
         alert('Error updating');
